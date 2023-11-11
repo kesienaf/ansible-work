@@ -48,6 +48,6 @@
 
   - name: Start HTTPD
     service:
-      name: "{{ 'httpd' }}"
+      name: "{{ 'httpd' if ansible_facts['distribution'] in ['CentOS' 'Amazon'] else 'apache2' }}"
       state: started
 ...
