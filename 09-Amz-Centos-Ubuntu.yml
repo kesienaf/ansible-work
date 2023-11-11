@@ -4,22 +4,26 @@
   become: yes
 
   tasks:
-    - name: Install HTTP on Ubuntu
+    - name: Install HTTP on Debian/Ubuntu
       apt:
         name: apache2
         state: present
       when: "ansible_facts['distribution'] in ['Ubuntu']"
 
-    - name: Install HTTP on CentOS/Amazon Linux
+    - name: Install HTTP on CentOS
       yum:
         name: httpd
         state: present
-      when: "ansible_facts['distribution'] in ['CentOS', 'Amazon']"
-      become: true
-      become_user: root
+      when: "ansible_facts['distribution'] in ['CentOS']"
+
+    - name: Install HTTP on Amazon Linux
+      dnf:
+        name: httpd
+        state: present
+      when: "ansible_facts['distribution'] in ['Amazon']"
 
     - name: Start HTTPD
       service:
-        name: "{{ 'apache2' if ansible_facts['distribution'] in ['Ubuntu'] else 'httpd' }}"
+        name: "{{ 'apache2' if ansible_facts['distribution'] in ['Debian', 'Ubuntu'] else 'httpd' }}"
         state: started
 ...
