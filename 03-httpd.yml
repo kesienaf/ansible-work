@@ -9,12 +9,12 @@
       name: httpd
       state: present
    
-   - name: Start HTTPD
+  - name: Start HTTPD
     service:
       name: httpd
       state: started
 
-   - name: Enable HTTPD
+  - name: Enable HTTPD
     service:
       name: httpd
       enabled: yes
