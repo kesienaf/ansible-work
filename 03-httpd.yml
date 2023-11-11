@@ -14,7 +14,7 @@
       name: httpd
       state: started
 
- - name: Enable HTTPD
+  - name: Enable HTTPD
     Service:
       name: httpd
       enabled: yes
