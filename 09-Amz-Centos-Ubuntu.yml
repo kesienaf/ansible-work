@@ -1,0 +1,23 @@
+---
+- name: Update HTTP server
+  hosts: g4
+  become: yes
+
+  tasks:
+    - name: Install HTTP on Ubuntu
+      apt:
+        name: apache2
+        state: present
+      when: "ansible_facts['distribution'] in ['Ubuntu']"
+
+    - name: Install HTTP on CentOS/Amazon Linux
+      yum:
+        name: httpd
+        state: present
+      when: "ansible_facts['distribution'] in ['CentOS', 'Amazon']"
+
+    - name: Start HTTPD
+      service:
+        name: "{{ 'apache2' if ansible_facts['distribution'] in ['Ubuntu'] else 'httpd' }}"
+        state: started
+...
