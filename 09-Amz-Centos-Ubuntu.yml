@@ -24,6 +24,6 @@
 
     - name: Start HTTPD
       service:
-        name: "{{ 'apache2' if ansible_facts['distribution'] in ['Debian', 'Ubuntu'] else 'httpd' }}"
+        name: "{{ 'apache2' if ansible_facts['distribution'] in ['Ubuntu'] else 'httpd' }}"
         state: started
 ...

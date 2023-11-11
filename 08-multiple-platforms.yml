@@ -39,4 +39,15 @@
       name: apache2
       enabled: yes
     when: ansible_distribution == "Ubuntu"
+
+  - name: Install HTTP on CentOS
+    yum:
+      name: httpd
+      state: present
+    when: "ansible_facts['distribution'] in ['CentOS']"
+
+  - name: Start HTTPD
+    service:
+      name: "{{ 'httpd' }}"
+      state: started
 ...
