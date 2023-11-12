@@ -59,6 +59,7 @@
       package:
         name: "{{ 'httpd' if ansible_distribution in ['CentOS'] else 'apache2' }}"
         state: present
+      when: ansible_distribution not in ['Amazon']
 
     - name: Start HTTPD server
       service:
