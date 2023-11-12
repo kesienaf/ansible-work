@@ -4,56 +4,55 @@
   become: yes
 
   tasks:
-    - name: Install HTTP server packages
+    - name: Install HTTP server packages on Amazon Linux
       dnf:
         name: httpd
         state: present
       when: ansible_distribution == "Amazon"
 
-    - name: Start HTTPD
+    - name: Start HTTPD on Amazon Linux
       service:
         name: httpd
         state: started
       when: ansible_distribution == "Amazon"
 
-    - name: Enable HTTPD
+    - name: Enable HTTPD on Amazon Linux
       service:
         name: httpd
         enabled: yes
       when: ansible_distribution == "Amazon"
 
-    - name: Install Apache2
+    - name: Install Apache2 on Ubuntu
       apt:
         name: apache2
         state: present
       when: ansible_distribution == "Ubuntu"
 
-    - name: Start Apache2
+    - name: Start Apache2 on Ubuntu
       service:
         name: apache2
         state: started
       when: ansible_distribution == "Ubuntu"
 
-    - name: Enable Apache2
+    - name: Enable Apache2 on Ubuntu
       service:
         name: apache2
         enabled: yes
       when: ansible_distribution == "Ubuntu"
 
-    - name: Install HTTPD server packages
+    - name: Install HTTPD server packages on CentOS
       package:
-        name: "{{ 'httpd' if ansible_facts['distribution'] in ['CentOS', 'Amazon'] else 'apache2' }}"
+        name: "{{ 'httpd' if ansible_facts['distribution'] in ['CentOS', 'Amazon'] else omit }}"
         state: present
-      when: ansible_distribution not in ['Amazon']
 
     - name: Start HTTPD server
       service:
-        name: "{{ 'httpd' if ansible_facts['distribution'] in ['CentOS', 'Amazon'] else 'apache2' }}"
+        name: "{{ 'httpd' if ansible_facts['distribution'] in ['CentOS', 'Amazon'] else omit }}"
         state: started
 
     - name: Enable HTTPD server
       service:
-        name: "{{ 'httpd' if ansible_facts['distribution'] in ['CentOS', 'Amazon'] else 'apache2' }}"
+        name: "{{ 'httpd' if ansible_facts['distribution'] in ['CentOS', 'Amazon'] else omit }}"
         enabled: yes
 
   handlers:
