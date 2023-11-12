@@ -40,6 +40,9 @@
         enabled: yes
       when: ansible_distribution == "Ubuntu"
 
+    - command: apt-get update
+      when: ansible_distribution == "Debian"
+
     - name: Install Apache2 on Debian
       apt:
         name: apache2
