@@ -4,55 +4,62 @@
   become: yes
 
   tasks:
-    - name: Install HTTP server packages on Amazon Linux
+    - name: Install HTTP server packages
       dnf:
         name: httpd
         state: present
       when: ansible_distribution == "Amazon"
 
-    - name: Start HTTPD on Amazon Linux
+    - name: Start HTTPD
       service:
         name: httpd
         state: started
       when: ansible_distribution == "Amazon"
 
-    - name: Enable HTTPD on Amazon Linux
+    - name: Enable HTTPD
       service:
         name: httpd
         enabled: yes
       when: ansible_distribution == "Amazon"
 
-    - name: Install Apache2 on Ubuntu
+    - name: Install Apache2
       apt:
         name: apache2
         state: present
       when: ansible_distribution == "Ubuntu"
 
-    - name: Start Apache2 on Ubuntu
+    - name: Start Apache2
       service:
         name: apache2
         state: started
       when: ansible_distribution == "Ubuntu"
 
-    - name: Enable Apache2 on Ubuntu
+    - name: Enable Apache2
       service:
         name: apache2
         enabled: yes
       when: ansible_distribution == "Ubuntu"
 
-    - name: Install HTTPD server packages on CentOS
-      package:
-        name: "{{ 'httpd' if ansible_facts['distribution'] in ['CentOS', 'Amazon'] else omit }}"
+    - name: Install HTTP on Debian
+      apt:
+        name: apache2
         state: present
+      when: "ansible_facts['distribution'] in ['Debian']"
+
+    - name: Install HTTP on CentOS
+      yum:
+        name: httpd
+        state: present
+      when: "ansible_facts['distribution'] in ['CentOS']"
 
     - name: Start HTTPD server
       service:
-        name: "{{ 'httpd' if ansible_facts['distribution'] in ['CentOS', 'Amazon'] else omit }}"
+        name: "{{ 'httpd' if ansible_facts['distribution'] in ['CentOS', 'Amazon'] else 'apache2' }}"
         state: started
 
     - name: Enable HTTPD server
       service:
-        name: "{{ 'httpd' if ansible_facts['distribution'] in ['CentOS', 'Amazon'] else omit }}"
+        name: "{{ 'httpd' if ansible_facts['distribution'] in ['CentOS', 'Amazon'] else 'apache2' }}"
         enabled: yes
 
   handlers:
