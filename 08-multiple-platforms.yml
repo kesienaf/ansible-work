@@ -46,6 +46,12 @@
       state: present
     when: "ansible_facts['distribution'] in ['CentOS']"
 
+  - name: Install HTTP on Debian
+    apt:
+      name: apache2
+      state: present
+    when: "ansible_facts['distribution'] in ['Debian']"
+
   - name: Start HTTPD
     service:
       name: "{{ 'httpd' if ansible_facts['distribution'] in ['CentOS', 'Amazon'] else 'apache2' }}"
