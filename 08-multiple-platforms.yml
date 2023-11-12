@@ -40,17 +40,17 @@
         enabled: yes
       when: ansible_distribution == "Ubuntu"
 
-    - name: Install HTTP on Debian
+    - name: Install Apache2 on Debian
       apt:
         name: apache2
         state: present
-      when: "ansible_facts['distribution'] in ['Debian']"
+      when: ansible_distribution == "Debian"
 
     - name: Install HTTP on CentOS
       yum:
         name: httpd
         state: present
-      when: "ansible_facts['distribution'] in ['CentOS']"
+      when: ansible_distribution == "CentOS"
 
     - name: Start HTTPD server
       service:
