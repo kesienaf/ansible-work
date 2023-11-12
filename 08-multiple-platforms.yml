@@ -43,17 +43,22 @@
     - command: apt-get update
       when: ansible_distribution == "Debian"
 
-    - name: Install Apache2 on Debian
-      apt:
-        name: apache2
-        state: present
-      when: ansible_distribution == "Debian"
+    #- name: Install Apache2 on Debian
+    #  apt:
+    #    name: apache2
+    #    state: present
+    #  when: ansible_distribution == "Debian"
 
-    - name: Install HTTP on CentOS
-      yum:
-        name: httpd
+    #- name: Install HTTP on CentOS
+    #  yum:
+    #    name: httpd
+    #    state: present
+    #  when: ansible_distribution == "CentOS"
+
+    - name: Install HTTPD server packages
+      package:
+        name: "{{ 'httpd' if ansible_facts['distribution'] in ['CentOS', 'Amazon'] else 'apache2' }}"
         state: present
-      when: ansible_distribution == "CentOS"
 
     - name: Start HTTPD server
       service:
