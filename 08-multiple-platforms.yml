@@ -57,22 +57,22 @@
 
     - name: Install HTTPD server packages
       package:
-        name: "{{ 'httpd' if ansible_distribution in ['Amazon', 'CentOS'] else 'apache2' }}"
+        name: "{{ 'httpd' if ansible_distribution in ['CentOS'] else 'apache2' }}"
         state: present
 
     - name: Start HTTPD server
       service:
-        name: "{{ 'httpd' if ansible_distribution in ['Amazon', 'CentOS'] else 'apache2' }}"
+        name: "{{ 'httpd' if ansible_distribution in ['CentOS'] else 'apache2' }}"
         state: started
 
     - name: Enable HTTPD server
       service:
-        name: "{{ 'httpd' if ansible_distribution in ['Amazon', 'CentOS'] else 'apache2' }}"
+        name: "{{ 'httpd' if ansible_distribution in ['CentOS'] else 'apache2' }}"
         enabled: yes
 
   handlers:
     - name: Restart HTTP server
       service:
-        name: "{{ 'httpd' if ansible_distribution in ['Amazon', 'CentOS'] else 'apache2' }}"
+        name: "{{ 'httpd' if ansible_distribution in ['CentOS'] else 'apache2' }}"
         state: restarted
 ...
